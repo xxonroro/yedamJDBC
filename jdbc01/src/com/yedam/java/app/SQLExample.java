@@ -50,19 +50,45 @@ public class SQLExample {
 			System.out.println("Insert 결과 : " + result);			
 			/**************************** UPDATE ****************************/
 			// 3. Statement or PreparedStatement 객체 생성
+			String update = "UPDATE employees SET last_name = ? WHERE employee_id = ?";
+			
+			pstmt = conn.prepareStatement(update);
+			pstmt.setString(1, "Kang");
+			pstmt.setInt(2, 1000);
+			
 			// 4. SQL 실행
+			result = pstmt.executeUpdate();
+			
 			// 5. 결과 값 처리
-
+			System.out.println("Update 결과 : " + result);
+			
 			/**************************** SELECT ****************************/
 			// 3. Statement or PreparedStatement 객체 생성
+			stmt = conn.createStatement();
+			
+			String select = "SELECT * FROM employees ORDER BY employee_id DESC";
+			
 			// 4. SQL 실행
-			// 5. 결과 값 처리
-
+			rs = stmt.executeQuery(select);
+			
+			// 5. 결과 값 처리 (테이블의 행을 위에서 아래로 순차적으로 접근한다.)
+			while(rs.next()) { 
+				String info = "사원번호 : " + rs.getInt("employee_id") + ", 이름 : " + rs.getString("first_name") + ", 성 : " + rs.getString("last_name");
+				System.out.println(info);
+			}
+			
 			/**************************** DELETE ****************************/
 			// 3. Statement or PreparedStatement 객체 생성
+			String delete = "DELETE FROM employees WHERE employee_id = 1000";
+			
+			stmt = conn.createStatement();
+			
 			// 4. SQL 실행
+			result = stmt.executeUpdate(delete);
+			
 			// 5. 결과 값 처리
-
+			System.out.println("Delete 결과 : " + result);
+			
 		} catch (ClassNotFoundException e) {
 			System.out.println("JDBC Driver Loading Fail");
 		} catch (SQLException e) {
