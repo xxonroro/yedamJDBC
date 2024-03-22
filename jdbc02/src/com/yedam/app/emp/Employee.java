@@ -2,6 +2,7 @@ package com.yedam.app.emp;
 
 import java.sql.Date;
 
+// VO 클래스
 public class Employee {
 	// 필드
 	private int employeeId;
